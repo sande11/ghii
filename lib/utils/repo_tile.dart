@@ -5,7 +5,7 @@ import '../provider/repo_provider.dart';
 
 class RepoTile extends StatelessWidget {
   final Repository repo;
-  final bool isLoading; 
+  final bool isLoading;
 
   const RepoTile({super.key, required this.repo, this.isLoading = false});
 
@@ -20,7 +20,7 @@ class RepoTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: const EdgeInsets.all(15),
-        child: isLoading 
+        child: isLoading
             ? const Center(
                 child: Text(
                   "Getting repos...",
@@ -49,7 +49,6 @@ class RepoTile extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 5),
-                    
                           ],
                         ),
                       ),
@@ -63,9 +62,15 @@ class RepoTile extends StatelessWidget {
                     thickness: 1,
                   ),
                   const SizedBox(height: 10),
-                  Text('Private: ${repo.private}'),
-                  Text('Login: ${repo.login}'),
-                  Text('Type: ${repo.type}'),
+                  Row(
+                    children: [
+                      _buildInfoCard('Private:', repo.private.toString()),
+                      const SizedBox(width: 5),
+                      _buildInfoCard('Login:', repo.login),
+                      const SizedBox(width: 5),
+                      _buildInfoCard('Type:', repo.type),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   Text(
                     'Description: ${repo.description ?? 'No description available'}',
@@ -76,4 +81,23 @@ class RepoTile extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildInfoCard(String title, String value) {
+  return Card(
+    child: Container(
+      width: 85,
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 5),
+          Text(value),
+        ],
+      ),
+    ),
+  );
 }
